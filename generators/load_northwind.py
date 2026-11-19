@@ -1,100 +1,79 @@
-"""
-Load Northwind schema + data into learning_sql database.
-Handles GO batch separators properly (sqlcmd style).
+"""Import the bundled Northwind SQL script into an existing SQL Server database.
+
+The script resets Northwind objects. Use a dedicated practice database.
 """
 
-import pyodbc
+import argparse
 import re
+import sys
 from pathlib import Path
 
-def split_sql_batches(sql_text: str):
-    """
-    Split SQL script by GO statements (sqlcmd style).
-    Handles common variations of GO.
-    """
-    # Remove BOM if present
-    if sql_text.startswith('\ufeff'):
-        sql_text = sql_text[1:]
 
-    # Split on GO as a standalone word on its own line
-    # This matches sqlcmd behavior
-    pattern = re.compile(r'^\s*GO\s*$', re.IGNORECASE | re.MULTILINE)
-    batches = pattern.split(sql_text)
-
-    # Clean up batches
-    cleaned = []
-    for batch in batches:
-        batch = batch.strip()
-        if batch:
-            cleaned.append(batch)
-    return cleaned
+SQL_FILE = Path(__file__).resolve().parent.parent / "schemas" / "northwind.sql"
+VERIFY_FILE = SQL_FILE.with_name("verify_northwind.sql")
 
 
-def main():
-    sql_file = Path(__file__).parent.parent / "schemas" / "northwind.sql"
+def split_sql_batches(sql_text: str) -> list[str]:
+    """Split sqlcmd GO lines while preserving all SQL within each batch."""
+    return [part.strip() for part in re.split(r"^\s*GO\s*$", sql_text.lstrip("\ufeff"), flags=re.I | re.M) if part.strip()]
 
-    if not sql_file.exists():
-        print(f"ERROR: File not found: {sql_file}")
-        return
 
-    print(f"Reading Northwind script from: {sql_file}")
-    sql_text = sql_file.read_text(encoding="utf-8", errors="ignore")
-    print(f"Script size: {len(sql_text):,} characters")
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--server", required=True, help=r"SQL Server name, e.g. .\SQLEXPRESS")
+    parser.add_argument("--database", default="NorthwindPractice", help="Existing practice database")
+    parser.add_argument("--driver", default="ODBC Driver 17 for SQL Server", help="Installed SQL Server ODBC driver")
+    parser.add_argument("--allow-reset", action="store_true", help="Confirm Northwind objects may be dropped/recreated")
+    args = parser.parse_args()
 
-    batches = split_sql_batches(sql_text)
-    print(f"Found {len(batches)} batches to execute.\n")
+    if not args.allow_reset:
+        parser.error("--allow-reset is required: northwind.sql drops and recreates Northwind objects")
 
-    conn_str = (
-        "Driver={ODBC Driver 17 for SQL Server};"
-        "Server=DESKTOP0122\\SQLEXPRESS;"
-        "Database=learning_sql;"
-        "Trusted_Connection=yes;"
-        "Encrypt=no;"
+    try:
+        import pyodbc
+    except ImportError:
+        print("pyodbc is required: python -m pip install pyodbc", file=sys.stderr)
+        return 1
+
+    batches = split_sql_batches(SQL_FILE.read_text(encoding="utf-8"))
+    connection_string = (
+        f"Driver={{{args.driver}}};Server={args.server};Database={args.database};"
+        "Trusted_Connection=yes;Encrypt=no;"
     )
+    print(f"Importing {len(batches)} batches into {args.server} / {args.database}")
 
-    print("Connecting to learning_sql...")
-    conn = pyodbc.connect(conn_str, autocommit=False)
-    cursor = conn.cursor()
+    try:
+        with pyodbc.connect(connection_string, autocommit=False) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT DB_NAME()")
+            current_database = cursor.fetchone()[0]
+            if current_database.lower() != args.database.lower():
+                raise RuntimeError(f"Connected to unexpected database: {current_database}")
 
-    success_count = 0
-    error_count = 0
+            for number, batch in enumerate(batches, 1):
+                try:
+                    cursor.execute(batch)
+                    while cursor.nextset():
+                        pass
+                except Exception as error:
+                    connection.rollback()
+                    raise RuntimeError(f"Batch {number}/{len(batches)} failed: {error}") from error
 
-    for i, batch in enumerate(batches, 1):
-        try:
-            # Show first 60 chars as preview
-            preview = " ".join(batch.split()[:8])
-            if len(preview) > 70:
-                preview = preview[:67] + "..."
-            print(f"[{i:3d}/{len(batches)}] {preview}")
-
-            cursor.execute(batch)
-            conn.commit()
-            success_count += 1
-
-        except Exception as e:
-            error_count += 1
-            print(f"    ERROR: {str(e)[:120]}")
-            # Rollback current transaction and continue
-            try:
-                conn.rollback()
-            except:
+            cursor.execute(VERIFY_FILE.read_text(encoding="utf-8"))
+            database_name, customer_count, order_count, detail_count, product_count = cursor.fetchone()
+            while cursor.nextset():
                 pass
 
-    conn.close()
-
-    print("\n" + "=" * 50)
-    print(f"Finished loading Northwind.")
-    print(f"Successful batches: {success_count}")
-    print(f"Failed batches:     {error_count}")
-
-    # Final verification
-    conn = pyodbc.connect(conn_str)
-    cur = conn.cursor()
-    cur.execute("SELECT COUNT(*) FROM sys.tables")
-    table_count = cur.fetchone()[0]
-    print(f"Tables in learning_sql: {table_count}")
-    conn.close()
+            connection.commit()
+            print(
+                f"Import complete in {database_name}: {customer_count} customers, "
+                f"{order_count} orders, {detail_count} details, {product_count} products"
+            )
+            return 0
+    except Exception as error:
+        print(f"Import failed: {error}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

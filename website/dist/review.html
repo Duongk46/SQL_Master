@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sổ tay ôn tập 77 bài SQL Server Northwind cho phỏng vấn middle fullstack developer.">
+<title>Sổ tay ôn tập · SQL Master Northwind</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#1c2c43;background:#f4f6fa;line-height:1.65}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}a{color:#2457aa;text-decoration:none}a:hover{text-decoration:underline}button,input{font:inherit}button{cursor:pointer}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr)}.side{position:sticky;top:0;height:100vh;overflow:auto;background:#142138;color:#c5d3e8;padding:25px 17px}.side .brand{color:#fff;font-size:1.12rem;font-weight:850;letter-spacing:.04em}.side .brand small{display:block;color:#83a0c2;font-size:.64rem;letter-spacing:.16em;margin-top:3px}.side p{color:#8199bb;font-size:.7rem;font-weight:800;letter-spacing:.13em;margin:29px 8px 9px}.side nav a{display:block;color:#c5d3e8;font-size:.82rem;padding:7px 9px;border-radius:8px}.side nav a:hover,.side nav a.active{background:#2a4163;color:#fff;text-decoration:none}.side .note{font-size:.75rem;color:#90a5c2;margin-top:22px;padding:14px 8px;border-top:1px solid #324969}.main{max-width:1220px;min-width:0;padding:30px clamp(18px,4vw,58px) 80px}.hero{padding:clamp(27px,4vw,52px);border-radius:20px;color:#fff;background:linear-gradient(120deg,#183154,#172946 65%,#225364);box-shadow:0 18px 35px #1b396023}.hero .eyebrow{color:#91dacb}.eyebrow{color:#6881a5;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.13;letter-spacing:-.035em;margin:13px 0}.hero p{max-width:760px;color:#d8e5f2;margin:0}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.btn{display:inline-block;border:1px solid #c4d2e3;border-radius:9px;background:#fff;color:#213a57;padding:9px 14px;font-size:.84rem;font-weight:750}.btn:hover{text-decoration:none;background:#ecf4ff}.btn.primary{background:#83dec1;border-color:#83dec1;color:#12352d}.btn.ghost{background:#294666;border-color:#476689;color:#fff}.stats{display:flex;gap:25px;flex-wrap:wrap;margin-top:29px;color:#c9d9e9;font-size:.78rem}.stats b{color:#fff;font-size:1.15rem;margin-right:4px}.search{display:flex;gap:10px;align-items:center;max-width:470px;margin:23px 0;background:#fff;border:1px solid #d5dfec;border-radius:10px;padding:9px 13px}.search input{border:0;outline:0;background:none;width:100%}.section{scroll-margin-top:24px;margin-top:34px}.head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin-bottom:15px}.head h2{font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.2;margin:5px 0 0;letter-spacing:-.025em}.range{color:#7184a0;font-size:.75rem;font-weight:800;white-space:nowrap}.panel{background:#fff;border:1px solid #dce4ef;border-radius:15px;padding:22px;margin-top:14px;box-shadow:0 2px 10px #1d3a6408}.panel h3{color:#264263;font-size:1.04rem;margin:0 0 8px}.panel p{margin:8px 0}.panel ul,.panel ol{margin:8px 0;padding-left:22px}.panel li{margin:4px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid .panel{margin:0}.code{position:relative;background:#132038;border-radius:10px;color:#e5f0ff;margin:14px 0;overflow:hidden}.code pre{margin:0;padding:17px 18px;overflow:auto;font:.82rem/1.58 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.code button{position:absolute;top:7px;right:8px;border:1px solid #526a89;border-radius:6px;color:#edf5ff;background:#2b405f;padding:4px 8px;font-size:.7rem}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.85em;background:#edf2f8;padding:1px 4px;border-radius:4px}.code code{background:none;padding:0;font-size:inherit}.callout{background:#eaf8f2;border-left:4px solid #50b799;border-radius:0 8px 8px 0;padding:11px 14px;margin:13px 0}.warn{background:#fff6e7;border-left-color:#dca240}.links{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}.links a{border:1px solid #d7e5f5;background:#f0f6fd;color:#2b4f7d;border-radius:8px;padding:5px 8px;font-size:.77rem}.links a:hover{background:#dceafa;text-decoration:none}.links b{color:#15846c;margin-right:5px}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:.86rem}td,th{padding:9px 10px;border-bottom:1px solid #e4e9f2;text-align:left;vertical-align:top}th{background:#f3f7fc;color:#355275}tr:last-child td{border-bottom:0}.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.map div{background:#f3f7fc;border:1px solid #dce6f2;border-radius:9px;padding:10px}.map strong{display:block;color:#254369}.map small{color:#657a98}.flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:15px 0;font-size:.81rem}.flow span{background:#eaf2fa;border-radius:7px;padding:5px 8px}.qa details{padding:10px 0;border-top:1px solid #e2e9f1}.qa details:first-child{border:0}.qa summary{cursor:pointer;font-weight:750;color:#244363}.qa details p{color:#435775}.hidden{display:none!important}#no-results{display:none;color:#945767}#no-results.visible{display:block}.footer{margin-top:35px;color:#76869d;font-size:.78rem}@media(max-width:850px){.layout{display:block}.side{position:static;height:auto;padding:15px}.side nav{display:flex;gap:4px;overflow:auto}.side nav a{white-space:nowrap}.side p,.side .note{display:none}.main{padding-top:17px}.map{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.grid,.map{grid-template-columns:1fr}.head{display:block}.range{display:block;margin-top:7px}.panel{padding:17px}.main{padding-left:14px;padding-right:14px}}@media print{body{background:#fff}.layout{display:block}.side,.actions,.search,.code button{display:none}.main{max-width:none;padding:0}.hero{background:#fff;box-shadow:none;color:#172941;border:1px solid #dce4ed}.hero p,.hero .eyebrow,.stats,.stats b{color:#172941}.panel{box-shadow:none}.section{break-inside:avoid}.qa details p{display:block}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side" aria-label="Mục lục"><a href="#top" class="brand">SQL MASTER<small>INTERVIEW REVIEW · NORTHWIND</small></a><p>MỤC LỤC ÔN TẬP</p><nav id="toc">
+<a href="#start">01 · Cách dùng</a><a href="#model">02 · Mô hình dữ liệu</a><a href="#select">03 · SELECT</a><a href="#filter">04 · Lọc và sắp xếp</a><a href="#join">05 · JOIN</a><a href="#aggregate">06 · Tổng hợp</a><a href="#cte">07 · Subquery và CTE</a><a href="#window">08 · Window functions</a><a href="#advanced">09 · T-SQL nâng cao</a><a href="#dml">10 · DML và transaction</a><a href="#concurrency">11 · Đồng thời</a><a href="#design">12 · Schema và hiệu năng</a><a href="#view">13 · View</a><a href="#function">14 · Function và trigger</a><a href="#procedure">15 · Stored procedure</a><a href="#fullstack">16 · Liên hệ fullstack</a><a href="#interview">17 · Hỏi nhanh</a><a href="#checklist">18 · Checklist</a>
+</nav><div class="note">Tài liệu mở trực tiếp trên máy. Các liên kết bài tập mở website luyện tập trong cùng thư mục.</div></aside>
+<main class="main" id="top">
+<header class="hero"><div class="eyebrow">Sổ tay ôn tập · Middle fullstack developer</div><h1>Nhìn lại toàn bộ<br>77 bài SQL Northwind.</h1><p>Từ mô hình dữ liệu, truy vấn, transaction đến hiệu năng và cách đưa SQL vào API. Mỗi mục có ý chính, ví dụ T-SQL, lỗi thường gặp và đường dẫn tới bài tập.</p><div class="actions"><a class="btn primary" href="#model">Bắt đầu đọc</a><a class="btn ghost" href="./index.html">Mở 77 bài tập</a><button class="btn ghost" type="button" id="print">In / lưu PDF</button></div><div class="stats"><span><b>13</b> chủ đề</span><span><b>77</b> bài tập</span><span><b>01</b> database SQL Server</span></div></header>
+<label class="search" for="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Lọc chủ đề theo tên hoặc nội dung..."></label><p id="no-results">Không có chủ đề phù hợp. Thử từ khóa khác.</p>
+
+<section class="section" id="start" data-search="cách dùng lộ trình chuẩn bị"><div class="head"><div><div class="eyebrow">BẮT ĐẦU</div><h2>Cách ôn trước phỏng vấn</h2></div></div>
+<div class="grid"><div class="panel"><h3>Quy trình 3 lượt</h3><ol><li>Đọc mô hình dữ liệu và 13 chủ đề để nhớ cú pháp, ý nghĩa.</li><li>Tự giải bài liên kết dưới từng chủ đề trong SSMS; dự đoán số hàng trước khi chạy.</li><li>Tập giải thích thành lời: vì sao chọn JOIN, GROUP BY, index hoặc transaction; nêu edge case.</li></ol></div><div class="panel"><h3>Chuẩn bị môi trường</h3><p>Tạo database riêng <code>NorthwindPractice</code>, chạy <code>schemas/northwind.sql</code> trong SSMS, rồi chạy <code>schemas/verify_northwind.sql</code>. Script Northwind xóa và tạo lại object mẫu khi chạy lại. Trang này và website bài tập không thực thi SQL.</p><p><a href="../../schemas/northwind-erd.md">ERD gốc</a> · <a href="../../README.md">Hướng dẫn repo</a></p></div></div>
+<div class="panel"><h3>Khung trả lời một câu SQL</h3><p><strong>Grain → dữ liệu → quan hệ → điều kiện → kết quả → hiệu năng.</strong> Nói rõ một dòng kết quả đại diện cho gì; khóa nào dùng để JOIN; cần giữ hàng thiếu quan hệ không; cách xử lý <code>NULL</code>, trùng, đồng hạng; cách xác minh bằng số hàng và actual plan.</p></div></section>
+
+<section class="section" id="model" data-search="northwind schema bảng khóa chính khóa ngoại erd dữ liệu quan hệ"><div class="head"><div><div class="eyebrow">NỀN TẢNG</div><h2>Đọc mô hình Northwind</h2></div><span class="range">8 BẢNG CHÍNH + 5 BẢNG PHỤ</span></div>
+<div class="panel"><div class="map"><div><strong>Customers</strong><small>CustomerID · khách</small></div><div><strong>Orders</strong><small>OrderID · đơn</small></div><div><strong>Order Details</strong><small>(OrderID, ProductID) · dòng đơn</small></div><div><strong>Products</strong><small>ProductID · sản phẩm</small></div><div><strong>Categories</strong><small>CategoryID · danh mục</small></div><div><strong>Suppliers</strong><small>SupplierID · nhà cung cấp</small></div><div><strong>Employees</strong><small>EmployeeID · nhân viên</small></div><div><strong>Shippers</strong><small>ShipperID · vận chuyển</small></div></div><div class="flow"><span>Customers</span>1 → N<span>Orders</span>1 → N<span>Order Details</span>N ← 1<span>Products</span></div><p><strong>Nhánh khác:</strong> Categories → Products; Suppliers → Products; Employees → Orders; Shippers → Orders; Employees.ReportsTo → Employees.EmployeeID. Năm bảng phụ: Region, Territories, EmployeeTerritories, CustomerDemographics, CustomerCustomerDemo.</p><div class="callout"><strong>Grain:</strong> một hàng ở <code>Orders</code> là một đơn; một hàng ở <code>[Order Details]</code> là một sản phẩm trong một đơn. JOIN đơn với chi tiết làm một đơn xuất hiện nhiều lần. <code>[Order Details]</code> là bảng nối many-to-many, khóa chính ghép <code>(OrderID, ProductID)</code>.</div></div>
+<div class="grid"><div class="panel"><h3>Cột cần nhớ</h3><ul><li><code>Orders.CustomerID/EmployeeID/ShipVia</code> là FK có thể <code>NULL</code>.</li><li><code>Products.CategoryID/SupplierID</code> có thể <code>NULL</code>.</li><li><code>OrderDate</code>, <code>ShippedDate</code> là <code>datetime</code>.</li><li><code>Products.UnitPrice</code> là giá hiện tại; <code>[Order Details].UnitPrice</code> là giá của dòng đơn.</li></ul></div><div class="panel"><h3>Quy tắc doanh thu</h3><p>Doanh thu tiền hàng theo dòng: <code>UnitPrice * Quantity * (1 - Discount)</code>. Tính từ <code>[Order Details]</code>; JOIN <code>Orders</code> khi cần ngày hoặc khách. <code>Freight</code> là phí vận chuyển riêng, chỉ cộng khi nghiệp vụ yêu cầu.</p><p>CHECK: <code>Quantity &gt; 0</code>, <code>Discount</code> từ 0 đến 1, giá không âm.</p></div></div></section>
+
+<section class="section" id="select" data-search="select distinct alias count tính toán dữ liệu"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 01</div><h2>SELECT cơ bản</h2></div><span class="range">BÀI 01–06</span></div><div class="panel"><p><code>SELECT</code> chọn cột/biểu thức; <code>FROM</code> chọn nguồn; <code>WHERE</code> chọn hàng. <code>AS</code> đặt tên; <code>DISTINCT</code> loại hàng trùng trên toàn bộ cột được chọn. <code>COUNT(*)</code> đếm hàng; <code>COUNT(column)</code> bỏ <code>NULL</code>. Không có <code>ORDER BY</code> thì thứ tự không được bảo đảm.</p><div class="code"><button type="button">Sao chép</button><pre><code>SELECT ProductID, ProductName, UnitPrice AS GiaBan,
+       UnitPrice * 0.90 AS DiscountedPrice
+FROM dbo.Products
+WHERE Discontinued = 0;
+
+SELECT DISTINCT Country
+FROM dbo.Customers
+WHERE Country IS NOT NULL;</code></pre></div><div class="callout warn"><code>SELECT *</code> có thể truyền dữ liệu thừa và khiến API phụ thuộc vào cột mới của schema. Biểu thức tính giá ở SELECT chỉ hiển thị, không sửa dữ liệu.</div><div class="links" data-range="1-6"></div></div></section>
+
+<section class="section" id="filter" data-search="where like null between top order by ngày thời gian"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 02</div><h2>Lọc và sắp xếp</h2></div><span class="range">BÀI 07–12</span></div><div class="panel"><p><code>LIKE N'C%'</code> tìm tên bắt đầu bằng C; <code>BETWEEN</code> gồm cả hai biên; dùng <code>IS NULL</code> thay <code>= NULL</code>. <code>TOP</code> muốn “mới nhất/đắt nhất” phải có <code>ORDER BY</code> ổn định.</p><div class="code"><button type="button">Sao chép</button><pre><code>SELECT TOP (10) OrderID, CustomerID, OrderDate
+FROM dbo.Orders
+WHERE OrderDate &gt;= '19970101'
+  AND OrderDate &lt; '19980101'
+ORDER BY OrderDate DESC, OrderID DESC;</code></pre></div><div class="callout"><strong>Khoảng nửa mở:</strong> <code>datetime</code> có phần giờ. <code>BETWEEN '19970101' AND '19971231'</code> có thể bỏ đơn sau 00:00 ngày 31/12. Điều kiện để nguyên cột ngày thường thuận lợi hơn cho index so với <code>YEAR(OrderDate) = 1997</code>.</div><div class="links" data-range="7-12"></div></div></section>
+
+<section class="section" id="join" data-search="join inner left self anti join null on where cardinality"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 03</div><h2>JOIN và quan hệ</h2></div><span class="range">BÀI 13–18</span></div><div class="grid"><div class="panel"><h3>Chọn loại JOIN</h3><p><code>INNER JOIN</code> giữ hàng có cặp. <code>LEFT JOIN</code> giữ mọi hàng trái, cột phải có thể <code>NULL</code>. Self JOIN dùng <code>Employees.ReportsTo</code> để tìm quản lý. Anti JOIN dùng <code>NOT EXISTS</code> hoặc <code>LEFT JOIN ... WHERE right.PK IS NULL</code>.</p></div><div class="panel"><h3>Cardinality và predicate</h3><p>JOIN Orders → Order Details tạo nhiều dòng trên một đơn. Nếu cần một dòng mỗi đơn, aggregate hoặc dùng <code>EXISTS</code>. Với LEFT JOIN, lọc bảng phải trong <code>WHERE</code> có thể loại hàng thiếu cặp; đặt trong <code>ON</code> nếu cần giữ hàng trái.</p></div></div><div class="panel"><div class="code"><button type="button">Sao chép</button><pre><code>SELECT c.CustomerID, c.CompanyName
+FROM dbo.Customers AS c
+WHERE NOT EXISTS (
+  SELECT 1 FROM dbo.Orders AS o
+  WHERE o.CustomerID = c.CustomerID
+);
+
+SELECT e.EmployeeID, e.FirstName, m.FirstName AS ManagerName
+FROM dbo.Employees AS e
+LEFT JOIN dbo.Employees AS m ON m.EmployeeID = e.ReportsTo;</code></pre></div><div class="links" data-range="13-18"></div></div></section>
+
+<section class="section" id="aggregate" data-search="group by having count avg sum revenue doanh thu tháng"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 04</div><h2>GROUP BY và thống kê</h2></div><span class="range">BÀI 19–24</span></div><div class="panel"><p><code>GROUP BY</code> tạo một hàng mỗi nhóm. <code>WHERE</code> lọc hàng trước nhóm; <code>HAVING</code> lọc nhóm sau aggregate. <code>SUM/AVG</code> bỏ <code>NULL</code>. Chú ý kiểu dữ liệu và quy tắc làm tròn khi tính tiền.</p><div class="code"><button type="button">Sao chép</button><pre><code>-- Khách không có đơn: COUNT(o.OrderID) trả 0
+SELECT c.CustomerID, COUNT(o.OrderID) AS OrderCount
+FROM dbo.Customers AS c
+LEFT JOIN dbo.Orders AS o ON o.CustomerID = c.CustomerID
+GROUP BY c.CustomerID;
+
+-- Giá lịch sử lấy từ Order Details
+SELECT OrderID,
+       SUM(UnitPrice * Quantity * (1 - Discount)) AS OrderTotal
+FROM dbo.[Order Details]
+GROUP BY OrderID;</code></pre></div><div class="callout warn">JOIN thêm một bảng 1:N trước khi cộng tiền có thể nhân đôi doanh thu. Xác định grain và aggregate ở đúng mức; kiểm tra số hàng trước/sau JOIN.</div><div class="links" data-range="19-24"></div></div></section>
+
+<section class="section" id="cte" data-search="subquery exists not exists cte recursive cây quản lý"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 05</div><h2>Subquery và CTE</h2></div><span class="range">BÀI 25–30</span></div><div class="panel"><p>Subquery scalar trả một giá trị (ví dụ giá trung bình). <code>EXISTS</code> kiểm tra có hàng, không nhân khách. <code>NOT EXISTS</code> rõ hơn <code>NOT IN</code> khi subquery có thể chứa <code>NULL</code>. CTE chia truy vấn thành bước; chỉ tồn tại cho câu lệnh ngay sau nó và không mặc định được lưu như bảng tạm.</p><div class="code"><button type="button">Sao chép</button><pre><code>;WITH OrderTotals AS (
+  SELECT OrderID, SUM(UnitPrice * Quantity * (1 - Discount)) AS Total
+  FROM dbo.[Order Details]
+  GROUP BY OrderID
+)
+SELECT OrderID, Total FROM OrderTotals
+WHERE Total &gt; (SELECT AVG(Total) FROM OrderTotals);
+
+-- Recursive CTE: anchor + recursive member
+;WITH Org AS (
+  SELECT EmployeeID, ReportsTo, 0 AS Depth
+  FROM dbo.Employees WHERE ReportsTo IS NULL
+  UNION ALL
+  SELECT e.EmployeeID, e.ReportsTo, o.Depth + 1
+  FROM dbo.Employees AS e
+  JOIN Org AS o ON e.ReportsTo = o.EmployeeID
+)
+SELECT * FROM Org OPTION (MAXRECURSION 100);</code></pre></div><div class="links" data-range="25-30"></div></div></section>
+
+<section class="section" id="window" data-search="window row_number rank dense_rank lag sum over partition running total"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 06</div><h2>Window functions</h2></div><span class="range">BÀI 31–36</span></div><div class="panel"><p>Hàm cửa sổ tính trên tập liên quan nhưng <strong>vẫn giữ từng hàng</strong>. <code>PARTITION BY</code> chia nhóm; <code>ORDER BY</code> xác định thứ tự. <code>ROW_NUMBER()</code> chọn đúng một hàng nếu có khóa phụ ổn định; <code>RANK()</code> đồng hạng và bỏ số kế; <code>DENSE_RANK()</code> đồng hạng không bỏ số. <code>LAG()</code> lấy hàng dữ liệu trước, chưa chắc là tháng lịch liền trước nếu thiếu tháng.</p><div class="code"><button type="button">Sao chép</button><pre><code>;WITH Ranked AS (
+  SELECT OrderID, CustomerID, OrderDate,
+         ROW_NUMBER() OVER (
+           PARTITION BY CustomerID
+           ORDER BY OrderDate DESC, OrderID DESC
+         ) AS rn
+  FROM dbo.Orders
+  WHERE CustomerID IS NOT NULL
+)
+SELECT OrderID, CustomerID, OrderDate
+FROM Ranked WHERE rn = 1;
+
+-- Tổng lũy kế: gom về tháng trước, rồi dùng window
+;WITH Monthly AS (
+  SELECT YEAR(o.OrderDate) AS SalesYear,
+         MONTH(o.OrderDate) AS SalesMonth,
+         SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS MonthRevenue
+  FROM dbo.Orders AS o
+  JOIN dbo.[Order Details] AS od ON od.OrderID = o.OrderID
+  WHERE o.OrderDate IS NOT NULL
+  GROUP BY YEAR(o.OrderDate), MONTH(o.OrderDate)
+)
+SELECT SalesYear, SalesMonth, MonthRevenue,
+       SUM(MonthRevenue) OVER (
+         ORDER BY SalesYear, SalesMonth
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+       ) AS RunningRevenue
+FROM Monthly
+ORDER BY SalesYear, SalesMonth;</code></pre></div><div class="callout warn">Top 3 <em>mỗi</em> danh mục: ranking với <code>PARTITION BY CategoryID</code>, rồi lọc ở truy vấn ngoài; <code>TOP (3)</code> một mình chỉ lấy 3 hàng toàn tập.</div><div class="links" data-range="31-36"></div></div></section>
+
+<section class="section" id="advanced" data-search="case coalesce union outer apply temp table grouping sets tsql"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 07</div><h2>T-SQL nâng cao</h2></div><span class="range">BÀI 37–44</span></div><div class="grid"><div class="panel"><h3>Biểu thức và tập hợp</h3><ul><li><code>CASE</code> phân nhánh trạng thái giao; thứ tự nhánh quan trọng.</li><li><code>COALESCE</code> hiển thị giá trị thay thế, không sửa dữ liệu.</li><li><code>UNION</code> bỏ trùng; <code>UNION ALL</code> giữ trùng.</li><li><code>GROUPING SETS</code> thêm dòng tổng theo năm/quốc gia.</li></ul></div><div class="panel"><h3>Truy vấn theo từng hàng</h3><p><code>OUTER APPLY</code> chạy subquery cho mỗi khách và giữ khách chưa có đơn; <code>CROSS APPLY</code> chỉ giữ khách có kết quả. <code>#OrderTotals</code> là bảng tạm trong phiên, có thể dùng để tái sử dụng/index dữ liệu trung gian.</p></div></div><div class="panel"><div class="code"><button type="button">Sao chép</button><pre><code>SELECT c.CustomerID, recent.OrderID, recent.OrderDate
+FROM dbo.Customers AS c
+OUTER APPLY (
+  SELECT TOP (1) o.OrderID, o.OrderDate
+  FROM dbo.Orders AS o
+  WHERE o.CustomerID = c.CustomerID
+  ORDER BY o.OrderDate DESC, o.OrderID DESC
+) AS recent;
+
+SELECT OrderID,
+  CASE WHEN ShippedDate IS NULL THEN N'Chưa giao'
+       WHEN ShippedDate &gt; RequiredDate THEN N'Giao trễ'
+       ELSE N'Đúng hạn' END AS ShippingStatus
+FROM dbo.Orders;</code></pre></div><div class="links" data-range="37-44"></div></div></section>
+
+<section class="section" id="dml" data-search="insert update delete transaction rollback output scope_identity constraint"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 08</div><h2>DML và transaction</h2></div><span class="range">BÀI 45–50</span></div><div class="panel"><p><code>INSERT</code> ghi hàng; <code>UPDATE/DELETE</code> phải nhắm đúng đối tượng và kiểm tra số hàng ảnh hưởng. <code>OUTPUT deleted/inserted</code> xem giá trị trước/sau. <code>SCOPE_IDENTITY()</code> lấy identity mới trong cùng scope. Xóa dòng <code>[Order Details]</code> trước khi xóa <code>Orders</code> vì FK. Transaction gom nhiều bước: thành công COMMIT, lỗi ROLLBACK.</p><div class="code"><button type="button">Sao chép</button><pre><code>BEGIN TRANSACTION;
+UPDATE dbo.Products
+SET UnitPrice = UnitPrice * 1.05
+OUTPUT deleted.ProductID,
+       deleted.UnitPrice AS OldPrice,
+       inserted.UnitPrice AS NewPrice
+WHERE ProductID = 1;
+SELECT @@ROWCOUNT AS UpdatedRows;
+ROLLBACK TRANSACTION; -- bài thực hành</code></pre></div><div class="callout warn">Thực hành trên database riêng; đọc toàn bộ script trước khi Execute. Bài 45–50 dùng ROLLBACK để giữ dữ liệu mẫu. Với thao tác thật, kiểm tra constraint, FK, số hàng sửa và xử lý lỗi ở API.</div><div class="links" data-range="45-50"></div></div></section>
+
+<section class="section" id="concurrency" data-search="isolation dirty read lost update up dlock holdlock xact_state savepoint concurrency"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 09</div><h2>Giao dịch và đồng thời</h2></div><span class="range">BÀI 51–55</span></div><div class="panel"><div class="tablewrap"><table><thead><tr><th>Vấn đề / kỹ thuật</th><th>Điều cần giải thích</th></tr></thead><tbody><tr><td>Dirty read</td><td><code>READ UNCOMMITTED</code> có thể đọc dữ liệu chưa commit rồi bị rollback. Không dùng <code>NOLOCK</code> như cách chữa hiệu năng mặc định.</td></tr><tr><td>Lost update</td><td>Hai phiên cùng đọc giá cũ rồi ghi đè. Dùng UPDATE có điều kiện so với giá đã đọc, hoặc khóa phù hợp.</td></tr><tr><td>Khóa tồn kho</td><td><code>UPDLOCK, HOLDLOCK</code> giữ quyền cập nhật trên hàng được đọc đến hết transaction; tránh transaction dài.</td></tr><tr><td>Lỗi trong transaction</td><td><code>XACT_STATE() = -1</code>: không thể commit, cần rollback; <code>0</code>: không có transaction; <code>1</code>: còn có thể commit.</td></tr><tr><td>Savepoint</td><td><code>SAVE TRANSACTION</code> cho phép rollback một phần khi transaction còn hợp lệ.</td></tr></tbody></table></div><div class="code"><button type="button">Sao chép</button><pre><code>BEGIN TRANSACTION;
+UPDATE dbo.Products
+SET UnitsInStock = UnitsInStock - 1
+WHERE ProductID = 1 AND UnitsInStock &gt;= 1;
+IF @@ROWCOUNT = 0
+BEGIN
+  ROLLBACK TRANSACTION;
+  THROW 50010, 'Insufficient stock or missing product.', 1;
+END;
+ROLLBACK TRANSACTION; -- thử nghiệm</code></pre></div><p>UPDATE có điều kiện là một câu lệnh nguyên tử. Nếu cần đọc nhiều điều kiện trước khi cập nhật, chọn transaction và khóa phù hợp, rồi thử bằng hai phiên.</p><div class="links" data-range="51-55"></div></div></section>
+
+<section class="section" id="design" data-search="schema pk fk unique check default index sargable execution plan statistics io offset fetch"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 10</div><h2>Schema và hiệu năng</h2></div><span class="range">BÀI 56–60</span></div><div class="grid"><div class="panel"><h3>Ràng buộc</h3><p>PK định danh duy nhất, không NULL. FK giữ quan hệ nhưng có thể NULL nếu schema cho phép. UNIQUE chống trùng. CHECK bảo vệ điều kiện như <code>Quantity &gt; 0</code>. DEFAULT cấp giá trị khi INSERT bỏ qua cột; API vẫn cần validation.</p></div><div class="panel"><h3>Index và plan</h3><p>Thiết kế index từ query: cột lọc bằng trước, cột sort/range sau. Northwind đã có index đơn cột trên <code>Orders.CustomerID</code>, <code>OrderDate</code> và vài index trùng mục đích. Xem index sẵn có; đo Actual Execution Plan và <code>SET STATISTICS IO ON</code>. Index tốn chi phí ghi và lưu trữ.</p></div></div><div class="panel"><div class="code"><button type="button">Sao chép</button><pre><code>SELECT OrderID, CustomerID, OrderDate
+FROM dbo.Orders
+WHERE CustomerID = N'ALFKI'
+ORDER BY OrderDate DESC, OrderID DESC
+OFFSET 40 ROWS FETCH NEXT 20 ROWS ONLY;
+
+-- Tạo để thử trên database luyện tập; đo trước/sau
+CREATE INDEX IX_PracticeOrders_CustomerDate
+ON dbo.Orders (CustomerID, OrderDate DESC, OrderID DESC);</code></pre></div><div class="callout"><strong>SARGable:</strong> lọc <code>OrderDate &gt;= @From AND OrderDate &lt; @To</code> thường dễ dùng index hơn <code>YEAR(OrderDate)</code>. Đừng kết luận chỉ từ chữ seek/scan; so hàng đọc, logical reads và thời gian trên dữ liệu đại diện.</div><div class="links" data-range="56-60"></div></div></section>
+
+<section class="section" id="view" data-search="view create or alter reusable order subtotals materialized indexed view"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 11</div><h2>View và tái sử dụng</h2></div><span class="range">BÀI 61–64</span></div><div class="panel"><p>View là truy vấn có tên. Đọc <code>dbo.[Order Subtotals]</code> có sẵn; tạo <code>dbo.vPracticeOrderTotals</code> để tái dùng. View thông thường không bảo đảm lưu sẵn dữ liệu hoặc thứ tự; ORDER BY ở truy vấn đọc view. Thay đổi view dùng cho API cần migration và kiểm tra tương thích.</p><div class="code"><button type="button">Sao chép</button><pre><code>CREATE OR ALTER VIEW dbo.vPracticeOrderTotals AS
+SELECT OrderID,
+       SUM(UnitPrice * Quantity * (1 - Discount)) AS OrderTotal
+FROM dbo.[Order Details]
+GROUP BY OrderID;
+GO
+SELECT TOP (10) OrderID, OrderTotal
+FROM dbo.vPracticeOrderTotals
+ORDER BY OrderTotal DESC, OrderID DESC;</code></pre></div><p>Tạo view bài 62 trước khi làm 63–64. <code>GO</code> là dấu tách batch của SSMS/sqlcmd, không phải câu lệnh T-SQL gửi tới SQL Server.</p><div class="links" data-range="61-64"></div></div></section>
+
+<section class="section" id="function" data-search="function scalar inline tvf trigger inserted deleted multi row audit"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 12</div><h2>Function và trigger</h2></div><span class="range">BÀI 65–69</span></div><div class="panel"><p>Scalar function trả một giá trị; inline table-valued function trả bảng từ một SELECT và dùng trong FROM. Đo plan nếu gọi function trên nhiều hàng. Trigger SQL Server chạy theo <strong>statement</strong>, không mặc định theo từng hàng; <code>inserted</code>/<code>deleted</code> chứa tất cả hàng mới/cũ.</p><div class="code"><button type="button">Sao chép</button><pre><code>-- Phần lõi của trigger audit giá nhiều hàng
+INSERT INTO dbo.PracticePriceAudit
+  (ProductID, OldPrice, NewPrice, ChangedAt)
+SELECT i.ProductID, d.UnitPrice, i.UnitPrice, SYSDATETIME()
+FROM inserted AS i
+JOIN deleted AS d ON d.ProductID = i.ProductID
+WHERE i.UnitPrice &lt;&gt; d.UnitPrice
+   OR (i.UnitPrice IS NULL AND d.UnitPrice IS NOT NULL)
+   OR (i.UnitPrice IS NOT NULL AND d.UnitPrice IS NULL);</code></pre></div><div class="callout warn">Tạo bảng audit ở bài 67 trước trigger bài 68; bài 69 thử UPDATE hai sản phẩm trong một statement và rollback. Lỗi trong trigger có thể làm thao tác ghi thất bại.</div><div class="links" data-range="65-69"></div></div></section>
+
+<section class="section" id="procedure" data-search="stored procedure parameter output try catch throw transaction paging create order"><div class="head"><div><div class="eyebrow">CHỦ ĐỀ 13</div><h2>Stored procedure</h2></div><span class="range">BÀI 70–77</span></div><div class="panel"><p>Procedure gom logic ở database, nhận tham số, trả result set hoặc OUTPUT. Các bài có tham số mặc định, kiểm tra đầu vào, đếm đơn, tạo đơn an toàn, phân trang, doanh thu theo ngày và đọc procedure mẫu <code>dbo.CustOrderHist</code>. <code>SET NOCOUNT ON</code> tránh row count message thừa; <code>THROW</code> báo lỗi; TRY/CATCH và transaction bảo vệ nhiều bước ghi.</p><div class="code"><button type="button">Sao chép</button><pre><code>CREATE OR ALTER PROCEDURE dbo.usp_PracticeOrderCount
+  @CustomerID nchar(5), @OrderCount int OUTPUT
+AS
+BEGIN
+  SET NOCOUNT ON;
+  SELECT @OrderCount = COUNT(*)
+  FROM dbo.Orders WHERE CustomerID = @CustomerID;
+END;
+GO
+DECLARE @Count int;
+EXEC dbo.usp_PracticeOrderCount
+  @CustomerID = N'ALFKI', @OrderCount = @Count OUTPUT;
+SELECT @Count AS OrderCount;</code></pre></div><div class="callout"><strong>Tạo đơn:</strong> kiểm tra khách/sản phẩm/số lượng; BEGIN TRY → BEGIN TRANSACTION → INSERT Orders → lấy identity → INSERT Details → COMMIT; CATCH rollback nếu còn transaction rồi THROW. Nếu nghiệp vụ trừ tồn kho, xử lý cạnh tranh giữa request.</div><div class="links" data-range="70-77"></div></div></section>
+
+<section class="section" id="fullstack" data-search="fullstack api frontend backend sql injection pagination security tests"><div class="head"><div><div class="eyebrow">KẾT NỐI VỚI VỊ TRÍ FULLSTACK</div><h2>Đưa kiến thức SQL vào API</h2></div></div><div class="grid"><div class="panel"><h3>Luồng danh sách đơn</h3><p>UI gửi bộ lọc và phân trang. API validate ngày, giới hạn page size, bind tham số SQL, lọc/sắp xếp ở database, chỉ trả cột cần hiển thị. Dùng <code>OrderDate DESC, OrderID DESC</code> để ổn định. Trang sâu trên dữ liệu lớn có thể dùng keyset pagination.</p></div><div class="panel"><h3>Luồng tạo đơn</h3><p>Frontend kiểm tra UX; backend vẫn kiểm tra dữ liệu, quyền và idempotency khi request có thể gửi lại. SQL dùng tham số, transaction cho Orders + Details, constraint bảo vệ invariant. Thành công trả OrderID; lỗi nghiệp vụ/xung đột map thành HTTP phù hợp.</p></div></div><div class="panel"><ul><li><strong>SQL injection:</strong> bind giá trị; với tên cột sort động, dùng allowlist.</li><li><strong>N+1:</strong> tránh gọi query theo từng dòng UI; lấy theo batch/JOIN với grain rõ.</li><li><strong>Money:</strong> API dùng decimal và quy tắc làm tròn nhất quán; Northwind mẫu dùng <code>money</code> và <code>real</code> cho Discount.</li><li><strong>Test:</strong> khách 0 đơn, ngày ranh giới, category NULL, đồng hạng, UPDATE 0 hàng, hai phiên cạnh tranh.</li><li><strong>Migration:</strong> quản lý index/view/procedure bằng migration; kiểm tra plan và đường ghi sau triển khai.</li></ul></div></section>
+
+<section class="section" id="interview" data-search="hỏi đáp phỏng vấn câu hỏi sql middle"><div class="head"><div><div class="eyebrow">TỰ KIỂM TRA</div><h2>Hỏi nhanh phỏng vấn</h2></div></div><div class="panel qa">
+<details><summary>1. Khi nào dùng LEFT JOIN thay INNER JOIN?</summary><p>Khi cần giữ mọi hàng của bảng trái, ví dụ mọi khách kể cả chưa có đơn. Kiểm tra vị trí điều kiện lọc bảng phải.</p></details>
+<details><summary>2. Vì sao COUNT(*) sai khi đếm đơn qua LEFT JOIN?</summary><p>Khách không có đơn vẫn sinh một hàng kết quả, nên COUNT(*) = 1. Dùng COUNT(o.OrderID) để được 0.</p></details>
+<details><summary>3. WHERE khác HAVING?</summary><p>WHERE lọc hàng trước GROUP BY; HAVING lọc nhóm sau aggregate.</p></details>
+<details><summary>4. ROW_NUMBER khác RANK?</summary><p>ROW_NUMBER đánh số riêng từng hàng; RANK cho đồng hạng và bỏ số tiếp theo. Thêm khóa phụ để thứ tự ổn định.</p></details>
+<details><summary>5. Vì sao doanh thu lấy giá từ Order Details?</summary><p>Đây là giá của giao dịch; Products.UnitPrice là giá hiện tại và có thể đổi.</p></details>
+<details><summary>6. Lọc toàn bộ đơn năm 1997 thế nào?</summary><p>OrderDate &gt;= '19970101' AND OrderDate &lt; '19980101'. Khoảng nửa mở bao phủ cả phần giờ ngày cuối.</p></details>
+<details><summary>7. NOT EXISTS khác NOT IN?</summary><p>NOT IN có thể cho kết quả bất ngờ nếu subquery chứa NULL; NOT EXISTS diễn đạt anti join rõ hơn.</p></details>
+<details><summary>8. CTE có tự materialize như bảng tạm?</summary><p>Không mặc định. CTE giúp diễn đạt; bảng tạm có thể lưu và index dữ liệu trung gian. So actual plan nếu hiệu năng quan trọng.</p></details>
+<details><summary>9. Transaction giúp gì khi tạo đơn?</summary><p>Orders và Details hoặc cùng commit, hoặc cùng rollback. Kết hợp constraint và kiểm soát đồng thời.</p></details>
+<details><summary>10. Dirty read là gì?</summary><p>Đọc thay đổi chưa commit của phiên khác; thay đổi có thể bị rollback. READ UNCOMMITTED cho phép hiện tượng này.</p></details>
+<details><summary>11. Index nào cho danh sách đơn theo khách mới nhất?</summary><p>Ứng viên: (CustomerID, OrderDate DESC, OrderID DESC). Xem index có sẵn và đo workload trước khi thêm.</p></details>
+<details><summary>12. Trigger chạy một lần cho mỗi hàng?</summary><p>SQL Server trigger DML chạy theo statement; inserted/deleted có thể chứa nhiều hàng. Viết set-based.</p></details>
+<details><summary>13. Chống SQL injection trong API?</summary><p>Bind giá trị bằng tham số; tên cột ORDER BY động phải qua allowlist cố định.</p></details>
+<details><summary>14. OFFSET/FETCH có vấn đề gì?</summary><p>Cần ORDER BY ổn định; trang sâu có thể tốn chi phí bỏ qua nhiều hàng. Keyset pagination hợp với duyệt tuần tự lượng lớn.</p></details>
+<details><summary>15. Kiểm chứng query có nhanh?</summary><p>So Actual Execution Plan, STATISTICS IO, thời gian, số hàng trên dữ liệu đại diện; xét cache, index và phân bố dữ liệu.</p></details>
+</div></section>
+<section class="section" id="checklist" data-search="checklist ôn tập cuối buổi"><div class="head"><div><div class="eyebrow">TRƯỚC BUỔI PHỎNG VẤN</div><h2>Checklist 10 phút</h2></div></div><div class="panel"><ol><li>Vẽ Customers → Orders → Order Details ← Products; giải thích grain.</li><li>Viết JOIN giữ khách 0 đơn, tính doanh thu từ giá dòng đơn.</li><li>Nhớ NULL, COUNT(*), HAVING, khoảng ngày nửa mở.</li><li>Lấy top N mỗi nhóm, đơn mới nhất mỗi khách, tổng lũy kế.</li><li>Giải thích transaction, rollback, isolation, lost update và số hàng sửa.</li><li>Đề xuất index từ query, đo bằng actual plan/logical reads.</li><li>Liên hệ API: validation, query tham số, pagination, xử lý lỗi, test edge case.</li></ol><p><a class="btn primary" href="./index.html">Quay lại 77 bài tập</a></p></div></section>
+<footer class="footer">SQL Master · Tổng hợp từ 77 bài tập, schema Northwind, ERD và README trong repo. Các đoạn SQL là ví dụ ôn tập; chạy trong database luyện tập và kiểm tra kết quả thực tế.</footer>
+</main></div>
+<script>
+(() => {
+  'use strict';
+  const titles = [
+    'Danh sách khách hàng','Sản phẩm và giá','Các quốc gia khách hàng','Sản phẩm ngừng bán','Giá sau giảm giả định','Số sản phẩm',
+    'Khách hàng tại Đức','Khoảng giá','Tên bắt đầu bằng C','Đơn chưa giao','Đơn trong năm 1997','10 đơn gần nhất',
+    'Đơn và tên khách','Khách chưa từng đặt','Sản phẩm và danh mục','Chi tiết đơn hàng','Nhân viên và quản lý','Đơn hàng đầy đủ',
+    'Số đơn của từng khách','Giá trung bình theo danh mục','Giá trị từng đơn','Khách có ít nhất 10 đơn','Doanh thu theo tháng','Top 5 khách theo doanh thu',
+    'Đắt hơn trung bình','Khách có đơn','Sản phẩm chưa bán','Đơn vượt trung bình','Khách chi tiêu trên 10000','Cây quản lý nhân viên',
+    'Đánh số đơn theo khách','Đơn mới nhất mỗi khách','Top 3 giá mỗi danh mục','Doanh thu lũy kế','So với tháng trước','Hạng doanh thu khách',
+    'Trạng thái vận chuyển','Tên vùng thay thế','Danh sách thành phố','Thống kê đơn theo trạng thái','Đơn cuối qua OUTER APPLY','Bảng tạm cho báo cáo','Sản phẩm đắt nhất mỗi danh mục','Tổng hợp theo năm và quốc gia',
+    'Thêm khách thử nghiệm','Cập nhật có điều kiện','Xóa khách không có đơn','Tạo đơn và chi tiết','Kiểm tra constraint','Xóa theo quan hệ',
+    'XACT_STATE khi có lỗi','Giữ khóa khi trừ tồn kho','Phát hiện ghi đè','Quan sát dirty read','Rollback một phần với savepoint',
+    'Đọc khóa ngoại','Bảng có unique key','Index đơn theo khách','Phân trang đơn','So execution plan',
+    'Đọc view có sẵn','Tạo view tổng tiền','Dùng view tính chi tiêu','Đọc định nghĩa view',
+    'Scalar function tổng đơn','Inline table-valued function','Bảng ghi lịch sử giá','Trigger ghi thay đổi giá','Thử trigger nhiều hàng',
+    'Procedure nhận tham số','Tham số mặc định','Kiểm tra đầu vào','Tham số OUTPUT','Procedure tạo đơn an toàn','Procedure phân trang','Procedure doanh thu theo ngày','Đọc procedure có sẵn'
+  ];
+  document.querySelectorAll('[data-range]').forEach(box => {
+    const parts = box.dataset.range.split('-').map(Number);
+    for (let number = parts[0]; number <= parts[1]; number++) {
+      const id = String(number).padStart(2, '0');
+      const link = document.createElement('a');
+      link.href = './index.html#' + id;
+      link.title = 'Mở bài ' + id + ' trong website bài tập';
+      const num = document.createElement('b'); num.textContent = id;
+      link.append(num, document.createTextNode(titles[number - 1]));
+      box.append(link);
+    }
+  });
+  document.querySelectorAll('.code button').forEach(button => button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(button.parentElement.querySelector('code').textContent);
+      button.textContent = 'Đã chép';
+      setTimeout(() => { button.textContent = 'Sao chép'; }, 1600);
+    } catch { button.textContent = 'Không thể chép'; }
+  }));
+  document.getElementById('print').addEventListener('click', () => window.print());
+  let openBeforePrint = [];
+  let hiddenBeforePrint = [];
+  window.addEventListener('beforeprint', () => {
+    openBeforePrint = [...document.querySelectorAll('.qa details[open]')];
+    hiddenBeforePrint = [...document.querySelectorAll('main .section.hidden')];
+    document.querySelectorAll('.qa details').forEach(item => { item.open = true; });
+    hiddenBeforePrint.forEach(item => item.classList.remove('hidden'));
+  });
+  window.addEventListener('afterprint', () => {
+    document.querySelectorAll('.qa details').forEach(item => { item.open = openBeforePrint.includes(item); });
+    hiddenBeforePrint.forEach(item => item.classList.add('hidden'));
+  });
+  document.getElementById('search').addEventListener('input', event => {
+    const term = event.target.value.trim().toLocaleLowerCase('vi');
+    let visible = 0;
+    document.querySelectorAll('main .section').forEach(section => {
+      const match = !term || ((section.dataset.search || '') + ' ' + section.textContent).toLocaleLowerCase('vi').includes(term);
+      section.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    document.getElementById('no-results').classList.toggle('visible', visible === 0);
+  });
+  if ('IntersectionObserver' in window) {
+    const nav = [...document.querySelectorAll('#toc a')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) nav.forEach(link => link.classList.toggle('active', link.hash === '#' + entry.target.id)); });
+    }, {rootMargin:'-15% 0px -70% 0px'});
+    document.querySelectorAll('main .section').forEach(section => observer.observe(section));
+  }
+})();
+</script>
+</body>
+</html>
